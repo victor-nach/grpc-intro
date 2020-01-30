@@ -13,6 +13,7 @@ import (
 type server struct{}
 
 func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.GreetResponse, error) {
+	fmt.Printf("Greet function was invoked with:  %v\n", req)
 	firstName := req.GetGreeting().GetFirstName()
 	result := "Hello " + firstName
 	res := &greetpb.GreetResponse{
@@ -33,9 +34,14 @@ func main() {
 
 	// create a new grpc server
 	s := grpc.NewServer()
-	greetpb.RegisterGreetServiceServer(s, &server{}) // here we can register as many services as we want
 
-	// bind the port to a grpc server
+	// here we can register as many services as we want on the server we created
+	// already from the proto file we defined, the greetService has a rpc call 'Greet'
+	// so the struct that we pass to this must implement that method
+	greetpb.RegisterGreetServiceServer(s, &server{})
+
+	// we already have a listener
+	// so we serve the server that already has all our services attached using that listener
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
