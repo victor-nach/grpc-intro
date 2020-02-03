@@ -36,5 +36,5 @@ func doAdd(c) {
 	if err != nil {
 		log.Fatalf("Error occured while calling add: %v", err)
 	}
-	log.Println("Response from add service: %v", res.Sum)
+	log.Println("Response from add service: %v", res.Sum)#
 }
