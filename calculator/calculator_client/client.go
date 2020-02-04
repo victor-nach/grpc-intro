@@ -23,11 +23,10 @@ func main() {
 
 	// create a client stub
 	c := calculatorpb.NewCalculatorServiceClient(conn)
-
 	doAdd(c)
 }
 
-func doAdd(c) {
+func doAdd(c calculatorpb.CalculatorServiceClient) {
 	req := &calculatorpb.AddRequest{
 		FirstNum:  5,
 		SecondNum: 6,
@@ -36,5 +35,5 @@ func doAdd(c) {
 	if err != nil {
 		log.Fatalf("Error occured while calling add: %v", err)
 	}
-	log.Println("Response from add service: %v", res.Sum)#
+	log.Printf("Response from add service: %v\n", res.Sum)
 }
